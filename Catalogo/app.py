@@ -3,6 +3,14 @@ import pandas as pd
 import altair as alt
 import json
 
+# Cargar Excel
+df = pd.read_excel("perfumes.xlsx", sheet_name="Hoja1")
+if "IMAGEN" not in df.columns:
+    df["IMAGEN"] = None
+
+# Selección de marca
+marcas = sorted(df["MARCA"].astype(str).unique())
+marca_sel = st.selectbox("Ingrese la marca:", marcas)
 # Filtrar DataFrame
 df_filtrado = df[df["MARCA"] == marca_sel]
 
