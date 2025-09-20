@@ -3,6 +3,13 @@ import pandas as pd
 import altair as alt
 import os
 
+# Configuración de la página
+st.set_page_config(
+    page_title="Catálogo de Perfumes",
+    page_icon="🌸",
+    layout="wide"   # 👈 esto la abre en modo ancho
+)
+
 # Cargar Excel
 df = pd.read_excel("Catalogo/perfumes.xlsx", sheet_name="Hoja1")
 if "IMAGEN" not in df.columns:
