@@ -48,7 +48,8 @@ else:
         with cols[i % n_cols]:
             # Imagen local desde Excel
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                st.image(row["IMAGEN"], use_container_width=True)
+                #st.image(row["IMAGEN"], use_container_width=True)
+                st.image(row["IMAGEN"], width=200)
             else:
                 st.image("https://via.placeholder.com/200", caption="Sin imagen")
 
