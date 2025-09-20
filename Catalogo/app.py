@@ -10,7 +10,7 @@ st.set_page_config(
     layout="wide"   # 👈 esto la abre en modo ancho
 )
 
-st.title("🌸 Catálogo de Perfumes")
+st.title("🌸 Catálogo de Perfumes 🧴")
 
 # Cargar Excel
 df = pd.read_excel("Catalogo/perfumes.xlsx", sheet_name="Hoja1")
