@@ -4,7 +4,7 @@ import altair as alt
 import os
 
 # Cargar Excel
-df = pd.read_excel("/Catalogo/perfumes.xlsx", sheet_name="Hoja1")
+df = pd.read_excel("Catalogo/perfumes.xlsx", sheet_name="Hoja1")
 if "IMAGEN" not in df.columns:
     df["IMAGEN"] = None
 
