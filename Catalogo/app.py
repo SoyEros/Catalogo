@@ -11,7 +11,7 @@ st.set_page_config(page_title="Catálogo de Perfumes", layout="wide")
 # -----------------------------
 # Cargar usuarios
 # -----------------------------
-with open("/home/sinarame/Documentos/GitHub/Catalogo/usuarios.json", "r", encoding="utf-8") as f:
+with open("usuarios.json", "r", encoding="utf-8") as f:
     USUARIOS = {u["usuario"]: u["password"] for u in json.load(f)}
 
 # -----------------------------
