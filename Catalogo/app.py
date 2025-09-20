@@ -45,29 +45,23 @@ else:
 
     cols = st.columns(n_cols)
     for i, (_, row) in enumerate(df_a_mostrar.iterrows()):
-        with cols[i % n_cols]:
-            # Imagen
-            if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                    st.image(row["IMAGEN"], use_container_width=True)
-                else:
-                    st.image("https://via.placeholder.com/200", caption="Sin imagen")
-            else:
-                st.image("https://via.placeholder.com/200", caption="Sin imagen")
-
-            # Info
-            st.markdown(
-                f"""
-                <div style="background-color:#E0BBE4; border:1px solid #CDB5E9; border-radius:10px; padding:15px; margin:10px;
-                            box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align:center;">
-                    <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
-                    <p><b>Perfil:</b> {row['PERFIL']}</p>
-                    <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
-                    <p><b>Definiciones:</b> {row['DEFINICIONES']}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+     with cols[i % n_cols]:
+         st.markdown(
+        f"""
+        <div style="background-color:#E0BBE4; border:1px solid #CDB5E9; 
+                    border-radius:10px; padding:15px; margin:10px;
+                    box-shadow:2px 2px 8px rgba(0,0,0,0.05); 
+                    text-align:center; height:450px; display:flex; flex-direction:column; justify-content:flex-start;">
+            <img src="{row['IMAGEN'] if pd.notna(row['IMAGEN']) else 'https://via.placeholder.com/200'}"
+                 style="max-width:100%; max-height:200px; object-fit:contain; border-radius:10px; margin-bottom:10px;">
+            <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
+            <p><b>Perfil:</b> {row['PERFIL']}</p>
+            <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
+            <p><b>Definiciones:</b> {row['DEFINICIONES']}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Gráfico
 df_long = pd.melt(
