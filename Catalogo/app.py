@@ -49,7 +49,7 @@ else:
             # Imagen
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
                 if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                    st.image(row["IMAGEN"], width=400)
+                    st.image(row["IMAGEN"], width=100)
                 else:
                     st.image("https://via.placeholder.com/200", caption="Sin imagen")
             else:
