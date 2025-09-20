@@ -46,12 +46,17 @@ else:
     cols = st.columns(n_cols)
     for i, (_, row) in enumerate(df_a_mostrar.iterrows()):
         with cols[i % n_cols]:
+            # Imagen
+            if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
+                st.image(row["IMAGEN"], use_container_width=True)
+            else:
+                st.image("https://via.placeholder.com/200", caption="Sin imagen")
+
+            # Info
             st.markdown(
                 f"""
                 <div style="background-color:#E0BBE4; border:1px solid #CDB5E9; border-radius:10px; padding:15px; margin:10px;
                             box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align:center;">
-                    <img src="{row['IMAGEN'] if pd.notna(row['IMAGEN']) else 'https://via.placeholder.com/200'}"
-                         style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
                     <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
                     <p><b>Perfil:</b> {row['PERFIL']}</p>
                     <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
@@ -60,7 +65,7 @@ else:
                 """,
                 unsafe_allow_html=True
             )
-            
+
 # Gráfico
 df_long = pd.melt(
     df_filtrado,
@@ -91,4 +96,3 @@ st.download_button(
     "text/csv",
     key="download-csv"
 )
-
