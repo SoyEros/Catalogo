@@ -54,17 +54,16 @@ else:
 
             # Info
             st.markdown(
-                f"""
-                <div style="border:1px solid #ddd; border-radius:10px; padding:10px; margin:10px;
-                            box-shadow: 2px 2px 8px rgba(0,0,0,0.1); text-align:center;">
-                    <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
-                    <p><b>Perfil:</b> {row['PERFIL']}</p>
-                    <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
-                    <p><b>Definiciones:</b> {row['DEFINICIONES']}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    f"""
+    <div style="background-color:#E0BBE4; border:1px solid #CDB5E9; border-radius:10px; padding:15px; margin:10px;
+                box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align:center;">
+        <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
+        <p><b>Perfil:</b> {row['PERFIL']}</p>
+        <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
+        <p><b>Definiciones:</b> {row['DEFINICIONES']}</p>
+    </div>
+    """,
+    unsafe_allow_html=True)
 
 # Gráfico
 df_long = pd.melt(
