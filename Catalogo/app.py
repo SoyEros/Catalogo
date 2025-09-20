@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-import json
+import os
 
 # Cargar Excel
-df = pd.read_excel("Catalogo/perfumes.xlsx", sheet_name="Hoja1")
+df = pd.read_excel("perfumes.xlsx", sheet_name="Hoja1")
 if "IMAGEN" not in df.columns:
     df["IMAGEN"] = None
 
 # Selección de marca
 marcas = sorted(df["MARCA"].astype(str).unique())
 marca_sel = st.selectbox("Ingrese la marca:", marcas)
+
 # Filtrar DataFrame
 df_filtrado = df[df["MARCA"] == marca_sel]
 
@@ -36,12 +37,17 @@ else:
     cols = st.columns(n_cols)
     for i, (_, row) in enumerate(df_a_mostrar.iterrows()):
         with cols[i % n_cols]:
+            # Imagen local desde Excel
+            if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
+                st.image(row["IMAGEN"], use_container_width=True)
+            else:
+                st.image("https://via.placeholder.com/200", caption="Sin imagen")
+
+            # Info
             st.markdown(
                 f"""
                 <div style="border:1px solid #ddd; border-radius:10px; padding:10px; margin:10px;
                             box-shadow: 2px 2px 8px rgba(0,0,0,0.1); text-align:center;">
-                    <img src="{row['IMAGEN'] if pd.notna(row['IMAGEN']) else 'https://via.placeholder.com/200'}"
-                         style="max-width:100%; height:auto; border-radius:10px; margin-bottom:10px;">
                     <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
                     <p><b>Perfil:</b> {row['PERFIL']}</p>
                     <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
