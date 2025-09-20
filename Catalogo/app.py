@@ -48,14 +48,10 @@ else:
         with cols[i % n_cols]:
             # Imagen
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                st.markdown(
-    f"""
-    <img src="{row['IMAGEN'] if pd.notna(row['IMAGEN']) else 'https://via.placeholder.com/200'}"
-         style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
-    """,
-    unsafe_allow_html=True
-)
-
+                if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
+                    st.image(row["IMAGEN"], use_column_width=True)
+                else:
+                    st.image("https://via.placeholder.com/200", caption="Sin imagen")
             else:
                 st.image("https://via.placeholder.com/200", caption="Sin imagen")
 
