@@ -3,53 +3,6 @@ import pandas as pd
 import altair as alt
 import json
 
-# -----------------------------
-# Configuración de página
-# -----------------------------
-st.set_page_config(page_title="Catálogo de Perfumes", layout="wide")
-
-# -----------------------------
-# Cargar usuarios
-# -----------------------------
-with open("usuarios.json", "r", encoding="utf-8") as f:
-    USUARIOS = {u["usuario"]: u["password"] for u in json.load(f)}
-
-# -----------------------------
-# Función de login
-# -----------------------------
-def login():
-    st.title("🔒 Login - Catálogo de Perfumes")
-    usuario = st.text_input("Usuario")
-    password = st.text_input("Contraseña", type="password")
-    if st.button("Ingresar"):
-        if usuario in USUARIOS and USUARIOS[usuario] == password:
-            st.session_state["logueado"] = True
-            st.session_state["usuario"] = usuario
-            st.rerun()
-        else:
-            st.error("Usuario o contraseña incorrectos")
-
-# -----------------------------
-# Si no está logueado, pedir login
-# -----------------------------
-if "logueado" not in st.session_state or not st.session_state["logueado"]:
-    login()
-    st.stop()
-
-# -----------------------------
-# Si está logueado, mostrar app
-# -----------------------------
-st.success(f"Bienvenido, {st.session_state['usuario']} 👋")
-
-# Cargar Excel
-df = pd.read_excel("perfumes.xlsx", sheet_name="Hoja1")
-if "IMAGEN" not in df.columns:
-    df["IMAGEN"] = None
-
-# Selección de marca
-marcas = sorted(df["MARCA"].astype(str).unique())
-marca_sel = st.selectbox("Ingrese la marca:", marcas)
-
 # Filtrar DataFrame
 df_filtrado = df[df["MARCA"] == marca_sel]
 
