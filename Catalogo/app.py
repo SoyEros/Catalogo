@@ -73,7 +73,7 @@ else:
 df_long = pd.melt(
     df_filtrado,
     id_vars=["MARCA", "PERFUME"],
-    value_vars=["PERFIL", "PERFIL SECUNDARIO"],
+    value_vars=["PERFIL PRINCIPAL", "PERFIL SECUNDARIO"],
     var_name="TIPO_PERFIL",
     value_name="PERFIL_TOTAL"
 ).dropna(subset=["PERFIL_TOTAL"])
