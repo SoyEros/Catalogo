@@ -6,12 +6,12 @@ import os
 # Configuración de la página
 # -----------------------------
 st.set_page_config(
-    page_title="Catálogo de Perfumes",
+    page_title="Biblioteca olfativa",
     page_icon="🌸",
     layout="wide"
 )
 
-st.title("🌸 Catálogo de Perfumes 🌸")
+st.title("🌸 Biblioteca olfativa 🌸")
 
 # -----------------------------
 # Cargar Excel
@@ -34,9 +34,17 @@ df_filtrado = df[df["MARCA"] == marca_sel]
 # -----------------------------
 # Buscador
 # -----------------------------
-busqueda = st.text_input("🔍 Buscar perfume dentro de la marca:")
+busqueda = st.text_input("🔍 Buscar por perfume, perfil o definiciones:")
+
 if busqueda:
-    df_filtrado = df_filtrado[df_filtrado["PERFUME"].str.contains(busqueda, case=False, na=False)]
+    mask = (
+        df_filtrado["PERFUME"].str.contains(busqueda, case=False, na=False)
+        | df_filtrado["PERFIL PRINCIPAL"].str.contains(busqueda, case=False, na=False)
+        | df_filtrado["PERFIL SECUNDARIO"].str.contains(busqueda, case=False, na=False)
+        | df_filtrado["ACORDES"].str.contains(busqueda, case=False, na=False)
+    )
+    df_filtrado = df_filtrado[mask]
+
 
 # -----------------------------
 # Toggle mostrar todos
