@@ -5,6 +5,12 @@ import os
 # -----------------------------
 # Configuración de la página
 # -----------------------------
+st.set_page_config(
+    page_title="Biblioteca olfativa",
+    page_icon="🥀",
+    layout="wide"
+)
+
 st.markdown(
     """
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -18,14 +24,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.set_page_config(
-    page_title="Biblioteca olfativa",
-    page_icon="🥀",
-    layout="wide"
-)
-
 st.title("🥀 Biblioteca olfativa 🥀")
-
 # -----------------------------
 # Cargar Excel
 # -----------------------------
