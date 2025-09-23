@@ -3,8 +3,6 @@ import pandas as pd
 import altair as alt
 import os
 import io
-from altair_saver import save  # 👈 asegurate de tenerlo: pip install altair_saver
-
 # -----------------------------
 # Configuración de la página
 # -----------------------------
@@ -99,34 +97,4 @@ if not df_long.empty:
         height=600
     )
     st.altair_chart(chart, use_container_width=True)
-
-    # -----------------------------
-    # Botones de descarga del gráfico
-    # -----------------------------
-    # PNG
-    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmpfile:
-        save(chart, tmpfile.name)
-        tmpfile.seek(0)
-        png_bytes = tmpfile.read()
-
-    # SVG
-    with tempfile.NamedTemporaryFile(suffix=".svg", delete=False) as tmpfile:
-        save(chart, tmpfile.name)
-        tmpfile.seek(0)
-        svg_bytes = tmpfile.read()
-
-    # Botones
-    st.download_button(
-        "📊 Descargar gráfico (PNG)",
-        data=png_bytes,
-        file_name=f"grafico_{marca_sel}.png",
-        mime="image/png"
-    )
-
-    st.download_button(
-        "📊 Descargar gráfico (SVG)",
-        data=svg_bytes,
-        file_name=f"grafico_{marca_sel}.svg",
-        mime="image/svg+xml"
-    )
 
