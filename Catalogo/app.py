@@ -2,37 +2,53 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import os
+import io
+from altair_saver import save  # 👈 asegurate de tenerlo: pip install altair_saver
 
+# -----------------------------
 # Configuración de la página
+# -----------------------------
 st.set_page_config(
     page_title="Catálogo de Perfumes",
     page_icon="🌸",
-    layout="wide"   # 👈 esto la abre en modo ancho
+    layout="wide"
 )
 
 st.title("🌸 Catálogo de Perfumes 🌸")
 
+# -----------------------------
 # Cargar Excel
+# -----------------------------
 df = pd.read_excel("Catalogo/perfumes.xlsx", sheet_name="Hoja1")
 if "IMAGEN" not in df.columns:
     df["IMAGEN"] = None
 
+# -----------------------------
 # Selección de marca
+# -----------------------------
 marcas = sorted(df["MARCA"].astype(str).unique())
 marca_sel = st.selectbox("Ingrese la marca:", marcas)
 
+# -----------------------------
 # Filtrar DataFrame
+# -----------------------------
 df_filtrado = df[df["MARCA"] == marca_sel]
 
+# -----------------------------
 # Buscador
+# -----------------------------
 busqueda = st.text_input("🔍 Buscar perfume dentro de la marca:")
 if busqueda:
     df_filtrado = df_filtrado[df_filtrado["PERFUME"].str.contains(busqueda, case=False, na=False)]
 
-# Toggle
+# -----------------------------
+# Toggle mostrar todos
+# -----------------------------
 mostrar_todos = st.toggle("👀 Mostrar todos los perfumes", value=False)
 
+# -----------------------------
 # Layout en grilla
+# -----------------------------
 st.subheader(f"Perfumes de {marca_sel}")
 if df_filtrado.empty:
     st.warning("No se encontraron perfumes.")
@@ -48,28 +64,20 @@ else:
         with cols[i % n_cols]:
             # Imagen
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                    st.image(row["IMAGEN"], use_container_width=True)
-                else:
-                    st.image("https://via.placeholder.com/200", caption="Sin imagen")
+                st.image(row["IMAGEN"], use_container_width=True)
             else:
                 st.image("https://via.placeholder.com/200", caption="Sin imagen")
 
-            # Info
-            st.markdown(
-                f"""
-                <div style="background-color:#E0BBE4; border:1px solid #CDB5E9; border-radius:10px; padding:15px; margin:10px;
-                            box-shadow: 2px 2px 8px rgba(0,0,0,0.05); text-align:center;">
-                    <h3 style="margin:5px 0;">{row['PERFUME']}</h3>
-                    <p><b>Perfil:</b> {row['PERFIL PRINCIPAL']}</p>
-                    <p><b>Secundario:</b> {row['PERFIL SECUNDARIO']}</p>
-                    <p><b>Definiciones:</b> {row['ACORDES']}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            # Info adaptada al tema
+            with st.container(border=True):
+                st.subheader(row["PERFUME"])
+                st.write(f"**Perfil:** {row['PERFIL PRINCIPAL']}")
+                st.write(f"**Secundario:** {row['PERFIL SECUNDARIO']}")
+                st.caption(f"Definiciones: {row['ACORDES']}")
 
-# Gráfico
+# -----------------------------
+# Gráfico Altair
+# -----------------------------
 df_long = pd.melt(
     df_filtrado,
     id_vars=["MARCA", "PERFUME"],
@@ -90,12 +98,27 @@ if not df_long.empty:
     )
     st.altair_chart(chart, use_container_width=True)
 
-# Botón descarga
-csv = df_filtrado.to_csv(index=False).encode("utf-8")
-st.download_button(
-    "💾 Descargar catálogo filtrado (CSV)",
-    csv,
-    f"catalogo_{marca_sel}.csv",
-    "text/csv",
-    key="download-csv"
-)
+    # -----------------------------
+    # Botones de descarga del gráfico
+    # -----------------------------
+    buf_png = io.BytesIO()
+    save(chart, buf_png, format="png")
+    buf_png.seek(0)
+
+    buf_svg = io.BytesIO()
+    save(chart, buf_svg, format="svg")
+    buf_svg.seek(0)
+
+    st.download_button(
+        "📊 Descargar gráfico (PNG)",
+        data=buf_png,
+        file_name=f"grafico_{marca_sel}.png",
+        mime="image/png"
+    )
+
+    st.download_button(
+        "📊 Descargar gráfico (SVG)",
+        data=buf_svg,
+        file_name=f"grafico_{marca_sel}.svg",
+        mime="image/svg+xml"
+    )
