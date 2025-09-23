@@ -77,7 +77,7 @@ else:
         with cols[i % n_cols]:
             # Imagen
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                st.image(row["IMAGEN"], use_container_width=True)
+                st.image(row["IMAGEN"], width="stretch")
             else:
                 st.image("https://via.placeholder.com/200", caption="Sin imagen")
 
@@ -111,5 +111,5 @@ if not df_long.empty:
         title=f"Perfumes de {marca_sel} agrupados por Perfil y Perfil Secundario",
         height=600
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width="stretch")
 
