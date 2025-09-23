@@ -86,6 +86,8 @@ df_long = pd.melt(
     value_name="PERFIL_TOTAL"
 ).dropna(subset=["PERFIL_TOTAL"])
 
+import tempfile
+
 if not df_long.empty:
     chart = alt.Chart(df_long).mark_circle(size=200).encode(
         x="PERFIL_TOTAL",
@@ -101,24 +103,30 @@ if not df_long.empty:
     # -----------------------------
     # Botones de descarga del gráfico
     # -----------------------------
-    buf_png = io.BytesIO()
-    save(chart, buf_png, format="png")
-    buf_png.seek(0)
+    # PNG
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmpfile:
+        save(chart, tmpfile.name)
+        tmpfile.seek(0)
+        png_bytes = tmpfile.read()
 
-    buf_svg = io.BytesIO()
-    save(chart, buf_svg, format="svg")
-    buf_svg.seek(0)
+    # SVG
+    with tempfile.NamedTemporaryFile(suffix=".svg", delete=False) as tmpfile:
+        save(chart, tmpfile.name)
+        tmpfile.seek(0)
+        svg_bytes = tmpfile.read()
 
+    # Botones
     st.download_button(
         "📊 Descargar gráfico (PNG)",
-        data=buf_png,
+        data=png_bytes,
         file_name=f"grafico_{marca_sel}.png",
         mime="image/png"
     )
 
     st.download_button(
         "📊 Descargar gráfico (SVG)",
-        data=buf_svg,
+        data=svg_bytes,
         file_name=f"grafico_{marca_sel}.svg",
         mime="image/svg+xml"
     )
+
