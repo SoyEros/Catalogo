@@ -109,5 +109,5 @@ if not df_long.empty:
         title=f"Perfumes de {marca_sel} agrupados por Perfil y Perfil Secundario",
         height=600
     )
-    st.altair_chart(chart, width="stretch")
+    st.altair_chart(chart, use_container_width=True)
 
