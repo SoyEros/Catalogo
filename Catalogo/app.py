@@ -5,6 +5,17 @@ import os
 # -----------------------------
 # Configuración de la página
 # -----------------------------
+st.markdown(
+    """
+    <style>
+    html, body, [class*="css"]  {
+        font-family: 'Arial', sans-serif;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.set_page_config(
     page_title="Biblioteca olfativa",
     page_icon="🌸",
