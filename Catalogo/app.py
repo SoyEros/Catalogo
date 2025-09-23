@@ -23,34 +23,36 @@ if "IMAGEN" not in df.columns:
 # -----------------------------
 # Selección de marca
 # -----------------------------
-# Selección de marca
-# Selección de marca (con opción "Todas")
 marcas = ["Todas las marcas"] + sorted(df["MARCA"].astype(str).unique())
 marca_sel = st.selectbox("Ingrese la marca:", marcas)
-
-# Filtrar DataFrame
-if marca_sel == "Todas las marcas":
-    df_filtrado = df.copy()
-else:
-    df_filtrado = df[df["MARCA"] == marca_sel]
-# -----------------------------
-# Filtrar DataFrame
-# -----------------------------
-df_filtrado = df[df["MARCA"] == marca_sel]
 
 # -----------------------------
 # Buscador
 # -----------------------------
 busqueda = st.text_input("🔍 Buscar por perfume, perfil o definiciones:")
 
-if busqueda:
-    mask = (
-        df_filtrado["PERFUME"].str.contains(busqueda, case=False, na=False)
-        | df_filtrado["PERFIL PRINCIPAL"].str.contains(busqueda, case=False, na=False)
-        | df_filtrado["PERFIL SECUNDARIO"].str.contains(busqueda, case=False, na=False)
-        | df_filtrado["ACORDES"].str.contains(busqueda, case=False, na=False)
-    )
-    df_filtrado = df_filtrado[mask]
+if marca_sel == "Todas las marcas":
+    if busqueda:
+        mask = (
+            df["PERFUME"].str.contains(busqueda, case=False, na=False)
+            | df["PERFIL PRINCIPAL"].str.contains(busqueda, case=False, na=False)
+            | df["PERFIL SECUNDARIO"].str.contains(busqueda, case=False, na=False)
+            | df["ACORDES"].str.contains(busqueda, case=False, na=False)
+        )
+        df_filtrado = df[mask]
+    else:
+        df_filtrado = pd.DataFrame(columns=df.columns)  # vacío hasta que busque
+else:
+    df_filtrado = df[df["MARCA"] == marca_sel]
+    if busqueda:
+        mask = (
+            df_filtrado["PERFUME"].str.contains(busqueda, case=False, na=False)
+            | df_filtrado["PERFIL PRINCIPAL"].str.contains(busqueda, case=False, na=False)
+            | df_filtrado["PERFIL SECUNDARIO"].str.contains(busqueda, case=False, na=False)
+            | df_filtrado["ACORDES"].str.contains(busqueda, case=False, na=False)
+        )
+        df_filtrado = df_filtrado[mask]
+
 
 # -----------------------------
 # Toggle mostrar todos
