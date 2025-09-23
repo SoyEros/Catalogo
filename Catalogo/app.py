@@ -77,9 +77,9 @@ else:
         with cols[i % n_cols]:
             # Imagen
             if pd.notna(row["IMAGEN"]) and os.path.exists(row["IMAGEN"]):
-                st.image(row["IMAGEN"], width="stretch")
+                st.image(row["IMAGEN"], use_container_width=True)
             else:
-                st.image("https://via.placeholder.com/200", caption="Sin imagen", width="stretch")
+                st.image("https://via.placeholder.com/200", caption="Sin imagen", use_container_width=True)
 
             # Info adaptada al tema
             with st.container(border=True):
