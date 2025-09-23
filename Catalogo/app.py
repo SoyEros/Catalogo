@@ -99,8 +99,6 @@ df_long = pd.melt(
     value_name="PERFIL_TOTAL"
 ).dropna(subset=["PERFIL_TOTAL"])
 
-import tempfile
-
 if not df_long.empty:
     chart = alt.Chart(df_long).mark_circle(size=200).encode(
         x="PERFIL_TOTAL",
