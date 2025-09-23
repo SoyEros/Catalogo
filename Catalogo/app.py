@@ -7,9 +7,11 @@ import os
 # -----------------------------
 st.markdown(
     """
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
     html, body, [class*="css"]  {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Montserrat', sans-serif;
     }
     </style>
     """,
