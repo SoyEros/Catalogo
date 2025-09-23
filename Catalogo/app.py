@@ -18,11 +18,11 @@ st.markdown(
 
 st.set_page_config(
     page_title="Biblioteca olfativa",
-    page_icon="🌸",
+    page_icon="🥀",
     layout="wide"
 )
 
-st.title("🌸 Biblioteca olfativa 🌸")
+st.title("🥀 Biblioteca olfativa 🥀")
 
 # -----------------------------
 # Cargar Excel
