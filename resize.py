@@ -2,8 +2,8 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 # --- Configuración ---
-SRC_DIR = Path("img")             # carpeta de origen con tus imágenes
-DST_DIR = Path("img_resized")     # carpeta de salida
+SRC_DIR = Path("Catalogo/img")             # carpeta de origen con tus imágenes
+DST_DIR = Path("Catalogo/img_resized")     # carpeta de salida
 TARGET_SIZE = (600, 600)          # ancho, alto final (cuadrado recomendado)
 MODE = "cover"                    # "cover" (recorte centrado) | "pad" (bordes) | "stretch"
 PAD_COLOR_HEX = "#E0BBE4"         # violeta pastel (si usás "pad")
