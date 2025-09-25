@@ -2,6 +2,14 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import os
+
+user = st.text_input("Usuario")
+pwd = st.text_input("Contraseña", type="password")
+
+if user == st.secrets["USER"] and pwd == st.secrets["PASSWORD"]:
+    st.success("Acceso permitido")
+else:
+    st.warning("Ingrese credenciales correctas")
 # -----------------------------
 # Configuración de la página
 # -----------------------------
