@@ -10,6 +10,7 @@ if user == st.secrets["USER"] and pwd == st.secrets["PASSWORD"]:
     st.success("Acceso permitido")
 else:
     st.warning("Ingrese credenciales correctas")
+    st.stop()  # 👈 corta la ejecución si el login es incorrecto
 # -----------------------------
 # Configuración de la página
 # -----------------------------
